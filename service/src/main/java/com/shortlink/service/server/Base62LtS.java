@@ -1,6 +1,11 @@
 package com.shortlink.service.server;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class Base62LtS {
+    @Value("${shortToLongUrl}")
+    private String shortToLongUrlValue;
+
     private final String BASE62_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private String base62(long num) {
@@ -15,9 +20,9 @@ public class Base62LtS {
     }
 
     public String encode(String url){
-        long numUrl = Long.parseLong(url);
+        long numUrl = url.hashCode();
         String result = base62(numUrl);
-        return  result;
+        return  shortToLongUrlValue+result;
     }
 
     /*
